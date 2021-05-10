@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const {User} = require('../models');
 
 
 const createUser = async(req, res) => {
@@ -25,8 +25,8 @@ const readUser = async(req, res) => {
 const updateUser = async(req, res) => {
   const {id} = req.params;
   try{
-    const user = await User.update(req.body,{ where:{id: id} });
-    res.send(`user with id ${user} has been updated`)
+    await User.update(req.body,{ where:{id: id} });
+    res.send('user is successfully updated');
   }
   catch(err){
     res.status(401),send(err);
@@ -36,8 +36,8 @@ const updateUser = async(req, res) => {
 const deleteUser = async(req, res) => {
   const {id} = req.params;
   try{
-    const user = await User.destroy({where:{id: id}});
-    res.send(`user with id ${user} has been deleted`);
+    await User.destroy({where:{id: id}});
+    res.send('user is successfully deleted');
   }
   catch(err){
     res.status(401).send(err);
