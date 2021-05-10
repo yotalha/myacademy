@@ -28,6 +28,27 @@ app.get('/', async(req, res) => {
   }
 })
 
+app.put('/update/:id', async(req, res) => {
+  const {id} = req.params;
+  try{
+    const user = await User.update(req.body,{ where:{id: id} });
+    res.send(`user with id ${user} has been updated`)
+  }
+  catch(err){
+    res.status(401),send(err);
+  }
+})
+
+app.delete('/delete/:id', async(req, res) => {
+  const {id} = req.params;
+  try{
+    const user = await User.destroy({where:{id: id}});
+    res.send(`user with id ${user} has been deleted`);
+  }
+  catch(err){
+    res.status(401).send(err);
+  }
+})
 
 
 app.listen(3000, () => {
