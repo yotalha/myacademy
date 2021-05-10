@@ -1,15 +1,34 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
+const db = require('./models');
+const {User} = require('./models');
 
-mongoose.connect('mongodb://localhost:27017/my-academy', {useNewUrlParser: true, useUnifiedTopology: true});
+db.sequelize.sync();
+
+app.use(express.json())
+
+app.post('/insert', async(req, res) => {
+  const {firstName, lastName} = req.body;
+  try{
+    const user = await User.create({firstName, lastName});
+    res.send(user);
+  }
+  catch(err){
+    res.status(401).send(err);
+  }
+})
+
+app.get('/', async(req, res) => {
+  try{
+    const user = await User.findAll();
+    res.send(user);
+  }
+  catch(err){
+    res.status(401).send(err);
+  }
+})
 
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('db is connected');
-});
 
 app.listen(3000, () => {
   console.log('listening on port 3000!!!');
