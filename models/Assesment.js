@@ -1,4 +1,4 @@
-modeule.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Assesment = sequelize.define('Assesment', {
     description: {
       type: DataTypes.STRING
