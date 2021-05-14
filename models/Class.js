@@ -5,8 +5,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     block: {
       type: DataTypes.STRING
+    },
+    createdAt: {
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      type: DataTypes.DATE
     }
   })
+
+  Class.associate = (models) => {
+    Class.hasOne(models.Course, {
+      foreignKey: 'ClassId'
+    })
+  }
+  // Class.hasOne(Course)
+
 
   return Class;
 }

@@ -11,5 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 
+  Teacher.associate = (models) => {
+    Teacher.hasMany(models.Assesment, {
+      foreignKey: 'TeacherId'
+    })
+  }
+
   return Teacher;
 }

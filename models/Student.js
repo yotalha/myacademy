@@ -14,5 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 
+  Student.associate = (models) => {
+    Student.hasOne(models.Result, {
+      foreignKey: 'StudentId'
+    })
+  }
+
   return Student;
 }
