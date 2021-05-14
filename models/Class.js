@@ -1,5 +1,3 @@
-const Course = require('./Course');
-
 module.exports = (sequelize, DataTypes) => {
   const Class = sequelize.define('Class', {
     code: {
@@ -17,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Class.associate = (models) => {
-    Class.hasMany(models.Course, {
-      onDelete: "cascade",
+    Class.hasOne(models.Course, {
+      foreignKey: 'ClassId'
     })
   }
   // Class.hasOne(Course)
