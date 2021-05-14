@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Student.associate = (models) => {
     Student.hasOne(models.Result, {
-      foreignKey: 'StudentId'
+      foreignKey: 'StudentId',
+      onDelete: 'cascade'
     })
   }
 

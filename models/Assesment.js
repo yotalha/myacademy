@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Assesment.associate = (models) => {
     Assesment.hasOne(models.Result, {
-      foreignKey: 'AssesmentId'
+      foreignKey: 'AssesmentId',
+      onDelete: 'cascade'
     })
   }
 
