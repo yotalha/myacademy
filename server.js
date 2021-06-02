@@ -11,6 +11,8 @@ const resultRoutes = require('./routes/result');
 
 db.sequelize.sync();
 
+
+
 app.use(express.json())
 
 app.use('/users', userRoutes);
@@ -20,6 +22,16 @@ app.use('/courses', courseRoutes);
 app.use('/assesments', assesmentRoutes);
 app.use('/classes', classRoutes);
 app.use('/results', resultRoutes);
+
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page Not Found', 404))
+})
+
+app.use((err, req, res, next) => {
+  const {statusCode = 500} = err;
+  if(!err.message) err.message = 'Oh no, GACHIHYPER'
+  res.status(statusCode)
+})
 
 
 app.listen(3000, () => {

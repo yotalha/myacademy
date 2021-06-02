@@ -55,6 +55,8 @@ const getSingleUser = async(req, res) => {
   }
 }
 
+
+
 module.exports = {
   createUser,
   readUser,
