@@ -1,13 +1,13 @@
 {
   "development": {
-    "username": "root",
+    "username": "talha",
     "password": "password",
     "database": "myacademy",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
+    "username": "talha",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
