@@ -1,8 +1,8 @@
 const Joi = require('joi');
 
 module.exports.userSchema = Joi.object({
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
+  username: Joi.string().min(6).required(),
+  password: Joi.string().min(6).required(),
 })
 
 module.exports.teacherSchema = Joi.object({

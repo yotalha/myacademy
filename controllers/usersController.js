@@ -1,15 +1,49 @@
 const {User} = require('../models');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+//register
+const registerUser = async(req, res) => {
+  const {username, password} = req.body;
+  const checkUser = await User.findOne({username: username});
+  if(checkUser){
+    res.status(400).send('username already exists!');
+  }
+  else{
+    //hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = await User.create({username: username, password: hashedPassword});
+    try{
+      res.send(user);
+    }
+    catch(err){
+      res.status(400).send(err);
+    }
+  }
+}
+
+//login
+const loginUser = async(req, res) => {
+
+  const {username, password} = req.body;
+  const user = await User.findOne({username: username});
 
 
-const createUser = async(req, res) => {
-  const {firstName, lastName} = req.body;
-  try{
-    const user = await User.create({firstName, lastName});
-    res.send(user);
-  }
-  catch(err){
-    res.status(401).send(err);
-  }
+  if(!user) return res.status(400).send('email or password is wrong');
+
+  const validPass = await bcrypt.compare(password, user.password);
+  
+  if(!validPass) return res.status(400).send('email or password is wrong');
+
+  //create and assign a token
+  const token = jwt.sign({id: user.id, username: user.username}, process.env.TOKEN_SECRET);
+  res.header('auth-token', token).send(token);
+}
+
+const jwtTest = (req, res) => {
+  res.send(req.user);
 }
 
 const readUser = async(req, res) => {
@@ -58,7 +92,9 @@ const getSingleUser = async(req, res) => {
 
 
 module.exports = {
-  createUser,
+  registerUser,
+  loginUser,
+  jwtTest,
   readUser,
   updateUser,
   deleteUser,
