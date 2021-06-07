@@ -28,18 +28,25 @@ const registerUser = async(req, res) => {
 const loginUser = async(req, res) => {
 
   const {username, password} = req.body;
-  const user = await User.findOne({username: username});
+  const checkUser = await User.findOne({where:{username: username}});
+
+  const user = { username: username}
 
 
-  if(!user) return res.status(400).send('email or password is wrong');
+  if(!checkUser) return res.status(400).send('email or password is wrong');
 
-  const validPass = await bcrypt.compare(password, user.password);
+  const validPass = await bcrypt.compare(password, checkUser.password);
   
   if(!validPass) return res.status(400).send('email or password is wrong');
 
   //create and assign a token
-  const token = jwt.sign({id: user.id, username: user.username}, process.env.TOKEN_SECRET);
-  res.header('auth-token', token).send(token);
+  const accessToken = generateAccessToken(user)
+  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+  res.json({ accessToken: accessToken, refreshToken: refreshToken})
+}
+
+function generateAccessToken(user) {
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s'})
 }
 
 const jwtTest = (req, res) => {
