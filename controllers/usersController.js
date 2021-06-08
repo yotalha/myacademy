@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 //register
 const registerUser = async(req, res) => {
   const {username, password} = req.body;
-  const checkUser = await User.findOne({username: username});
+  const checkUser = await User.findOne({where: {username: username}});
   if(checkUser){
     res.status(400).send('username already exists!');
   }
@@ -28,7 +28,7 @@ const registerUser = async(req, res) => {
 const loginUser = async(req, res) => {
 
   const {username, password} = req.body;
-  const user = await User.findOne({username: username});
+  const user = await User.findOne({where: {username: username}});
 
 
   if(!user) return res.status(400).send('email or password is wrong');
