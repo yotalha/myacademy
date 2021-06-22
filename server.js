@@ -27,6 +27,11 @@ app.use('/assesments', assesmentRoutes);
 app.use('/classes', classRoutes);
 app.use('/results', resultRoutes);
 
+app.post("/post", (req, res) => {
+  console.log("Connected to React");
+  res.redirect("/");
+});
+
 
 
 app.all('*', (req, res, next) => {
@@ -40,7 +45,7 @@ app.use((err, req, res, next) => {
 })
 
 
-app.listen(3000, () => {
-  console.log('listening on port 3000!!!');
+app.listen(5000, () => {
+  console.log('listening on port 5000!!!');
 })
 
