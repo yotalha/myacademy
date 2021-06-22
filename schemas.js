@@ -1,7 +1,9 @@
 const Joi = require('joi');
 
 module.exports.userSchema = Joi.object({
+  fullName: Joi.string().required(),
   username: Joi.string().min(6).required(),
+  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
   password: Joi.string().min(6).required(),
 })
 

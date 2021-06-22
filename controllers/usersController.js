@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 
 //register
 const registerUser = async(req, res) => {
-  const {username, password} = req.body;
+  const {fullName, username, email, password} = req.body;
+  console.log(fullName);
   const checkUser = await User.findOne({where: {username: username}});
   if(checkUser){
     res.status(400).send('username already exists!');
@@ -14,7 +15,7 @@ const registerUser = async(req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = await User.create({username: username, password: hashedPassword});
+    const user = await User.create({fullName: fullName, email: email, username: username, password: hashedPassword});
     try{
       res.send(user);
     }
@@ -84,7 +85,7 @@ const getSingleUser = async(req, res) => {
     res.send(user);
   }
   catch(err){
-    res.status(401).send('error', err);
+    res.status(401).send(err);
   }
 }
 
