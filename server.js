@@ -10,14 +10,14 @@ const classRoutes = require('./routes/class');
 const resultRoutes = require('./routes/result');
 const ExpressError = require('./utils/ExpressError')
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config();
 
 db.sequelize.sync();
 
-
-
 app.use(express.json())
+app.use(cors())
 
 app.use('/users', userRoutes);
 app.use('/students', studentRoutes);
