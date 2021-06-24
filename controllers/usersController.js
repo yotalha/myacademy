@@ -38,7 +38,7 @@ const loginUser = async(req, res) => {
 
   //create and assign a token
   const token = jwt.sign({username: user.username}, process.env.ACCESS_TOKEN_SECRET);
-  res.header('auth-token', token).send(token);
+  res.header('auth-token', token).send(user);
 }
 
 const jwtTest = (req, res) => {
