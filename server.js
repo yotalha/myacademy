@@ -32,6 +32,11 @@ app.post("/post", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/pm2", (req, res) => {
+  console.log("this is worker one");
+  res.send('working with pm2')
+})
+
 
 
 app.all('*', (req, res, next) => {
